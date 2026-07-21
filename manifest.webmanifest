@@ -1,9 +1,9 @@
 {
   "name": "WolfTV",
   "short_name": "WolfTV",
-  "start_url": "./?app=2",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#070b13",
+  "background_color": "#090d16",
   "theme_color": "#080d18",
   "icons": [
     {
