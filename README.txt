@@ -1,3 +1,10 @@
-WolfTV 2.3
+# WolfTV 2.3.1 — Deletion Persistence Test
 
-Deleted shows are recorded by permanent ID and remain deleted after future program or catalog updates. New seed shows can be merged without restoring removed rows. Automatic backups remain enabled.
+This is a harmless test update based on WolfTV 2.3. It changes only the visible version/release-note text and the service-worker cache name. It preserves the existing local database and deletion records.
+
+After uploading, confirm these titles remain absent:
+- Agency
+- American Monster
+- American Primeval
+
+Use the normal address: https://thewolfquest.github.io/TV

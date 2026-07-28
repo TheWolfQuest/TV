@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1324">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>WolfTV 2.3</title>
+  <title>WolfTV 2.3.1 Test</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.3 · TheWolfQuest</small></div></div>
+  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.3.1 TEST · TheWolfQuest</small></div></div>
   <div class="profile"><label for="profile">Watching as</label><select id="profile"></select></div>
   <button id="theme" title="Switch light/dark mode" aria-label="Switch light/dark mode">🌙</button>
 </header>
@@ -66,7 +66,7 @@
     <article><h3>Backup & Transfer</h3><p>WolfTV now keeps up to 10 automatic backups on this device whenever you make a change. Downloaded backups are still best for moving data between devices.</p><p id="autoBackupStatus" class="muted"></p><div class="stack"><button id="restoreLatestAuto">Restore latest automatic backup</button><button id="clearAutoBackups">Clear automatic backups</button><button id="backup">Download backup</button><button id="restore">Restore downloaded backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div></article>
     <article><h3>Import / Export</h3><p>Export the shared catalog as CSV for Excel, or import a CSV containing Title, Network, Release and Status.</p><div class="stack"><button id="exportCsv">Export catalog CSV</button><button id="importCsv">Import catalog CSV</button><input id="csvFile" type="file" accept=".csv,text/csv" hidden></div></article>
     <article><h3>Feedback Log</h3><textarea id="feedbackText" rows="4" placeholder="Write an improvement idea or problem..."></textarea><button id="saveFeedback">Save feedback</button><div id="feedbackList"></div></article>
-    <article><h3>Release Notes</h3><p><b>WolfTV 2.3</b></p><p>Deleted shows now stay deleted through future program and catalog updates. Permanent show IDs, deletion records, and database migration logic preserve your library changes. Automatic backups remain enabled.</p></article>
+    <article><h3>Release Notes</h3><p><b>WolfTV 2.3.1 — Deletion Persistence Test</b></p><p>This test release makes only a visible version-label change. It does not replace or reset your saved catalog. Agency, American Monster, and American Primeval should remain deleted after this update.</p><p class="test-note">TEST BUILD: verify your three deleted titles are still absent.</p></article>
   </div></section>
 </main>
 <div id="toast" role="status"></div>
