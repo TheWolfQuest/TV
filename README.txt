@@ -1,11 +1,5 @@
-WolfTV 4 GitHub Pages Update
+WolfTV 2.2
 
-Upload every file in this folder to the ROOT of the GitHub repository named TV.
-Replace the existing files and commit the changes.
+Upload all files to the root of your GitHub TV repository, replacing the existing files. Use the normal site address: https://thewolfquest.github.io/TV
 
-Then open:
-https://thewolfquest.github.io/TV/?v=40
-
-Profiles included: Keith, Debby, Sara, Kevin, John, Glenn.
-The show catalog is shared. Each profile's progress is stored separately on each browser/device.
-Use Backup on one device and Restore on another to transfer all profiles and progress.
+Automatic backups are stored separately on each device and browser.

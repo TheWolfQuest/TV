@@ -1,12 +1,3 @@
-# WolfTV 2.1
+# WolfTV 2.2
 
-GitHub Pages web app for tracking TV shows and movies.
-
-## Main changes
-- Removed Cost, Season and Episode columns.
-- Added combined Watched column using `S2 E4` format.
-- Removed Edit button for existing rows.
-- Added direct inline editing.
-- Added clickable Next button.
-- Added row delete button.
-- Improved service worker updating so the normal site URL can be bookmarked without a `?v=` suffix.
+Adds rolling automatic backups stored locally on each device. WolfTV keeps up to 10 prior snapshots and can restore the latest one from Settings. Downloaded backups remain the best way to transfer data between devices.

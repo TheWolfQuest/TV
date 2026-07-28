@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1324">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>WolfTV 2.1</title>
+  <title>WolfTV 2.2</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.1 · TheWolfQuest</small></div></div>
+  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.2 · TheWolfQuest</small></div></div>
   <div class="profile"><label for="profile">Watching as</label><select id="profile"></select></div>
   <button id="theme" title="Switch light/dark mode" aria-label="Switch light/dark mode">🌙</button>
 </header>
@@ -63,10 +63,10 @@
 
   <section id="settings" class="page"><h2>Settings & Data</h2><div class="settingsgrid">
     <article><h3>Profiles</h3><div id="profiles"></div><div class="inline"><input id="newProfile" placeholder="New profile name"><button id="addProfile">Add</button></div></article>
-    <article><h3>Backup & Transfer</h3><p>Use a backup to move the catalog and every profile between your PC and tablet.</p><div class="stack"><button id="backup">Download backup</button><button id="restore">Restore backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div></article>
+    <article><h3>Backup & Transfer</h3><p>WolfTV now keeps up to 10 automatic backups on this device whenever you make a change. Downloaded backups are still best for moving data between devices.</p><p id="autoBackupStatus" class="muted"></p><div class="stack"><button id="restoreLatestAuto">Restore latest automatic backup</button><button id="clearAutoBackups">Clear automatic backups</button><button id="backup">Download backup</button><button id="restore">Restore downloaded backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div></article>
     <article><h3>Import / Export</h3><p>Export the shared catalog as CSV for Excel, or import a CSV containing Title, Network, Release and Status.</p><div class="stack"><button id="exportCsv">Export catalog CSV</button><button id="importCsv">Import catalog CSV</button><input id="csvFile" type="file" accept=".csv,text/csv" hidden></div></article>
     <article><h3>Feedback Log</h3><textarea id="feedbackText" rows="4" placeholder="Write an improvement idea or problem..."></textarea><button id="saveFeedback">Save feedback</button><div id="feedbackList"></div></article>
-    <article><h3>Release Notes</h3><p><b>WolfTV 2.1</b></p><p>Removed Cost, combined Season and Episode into Watched, removed the Edit workflow, added direct cell editing, clickable Next, and improved automatic updates at the normal web address.</p></article>
+    <article><h3>Release Notes</h3><p><b>WolfTV 2.2</b></p><p>Added rolling automatic backups on each device, with one-click restore of the latest backup. WolfTV keeps up to 10 prior snapshots while retaining downloaded backup and restore.</p></article>
   </div></section>
 </main>
 <div id="toast" role="status"></div>
