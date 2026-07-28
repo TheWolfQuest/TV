@@ -1,12 +1,12 @@
-# WolfTV 1.1
+# WolfTV 1.2
 
-GitHub Pages release with a compact table layout.
+GitHub Pages release for `https://thewolfquest.github.io/TV/`.
 
-Changes:
-- Narrower Show column so more columns fit on screen
-- Tighter widths for small fields
-- Drag column dividers to resize
-- Double-click a divider to reset that column
-- Widths are remembered on each device
+Changes in 1.2:
+- Removed the Cost column.
+- Combined Season and Episode into **Watched** using `S2 E4`.
+- Kept **Next** as a clickable episode-advance button.
+- Narrowed the table and added visible, draggable column dividers.
+- Preserved existing WolfTV local data by continuing to use the same storage key.
 
-Upload all files to the root of the TV repository and open with `?v=110`.
+Upload every file in this folder to the root of the `TV` repository, replacing the current files. Then open `https://thewolfquest.github.io/TV/?v=120` once to bypass the old cache.
