@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1324">
-  <title>WolfTV 2.0</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>WolfTV 2.1</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=200">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.0 · TheWolfQuest</small></div></div>
+  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.1 · TheWolfQuest</small></div></div>
   <div class="profile"><label for="profile">Watching as</label><select id="profile"></select></div>
   <button id="theme" title="Switch light/dark mode" aria-label="Switch light/dark mode">🌙</button>
 </header>
@@ -22,10 +23,7 @@
 </nav>
 <main>
   <section id="dashboard" class="page">
-    <div class="welcome">
-      <div><p class="eyebrow">WATCHING AS <span id="profileName">KEITH</span></p><h2>Your TV and movie manager</h2><p>The catalog is shared. Progress, ratings, favorites and notes are separate for each profile on this device.</p></div>
-      <button class="primary" data-open-library="all">Open full library</button>
-    </div>
+    <div class="welcome"><div><p class="eyebrow">WATCHING AS <span id="profileName">KEITH</span></p><h2>Your TV and movie manager</h2><p>The show library is shared. Progress, ratings, favorites and notes are separate for each profile on this device.</p></div><button class="primary" data-open-library="all">Open full library</button></div>
     <div class="cards">
       <button data-filter="Watching"><b id="statWatching">0</b><span>Continue Watching</span></button>
       <button data-filter="soon"><b id="statSoon">0</b><span>Coming Soon</span></button>
@@ -42,10 +40,7 @@
   </section>
 
   <section id="library" class="page active">
-    <div class="librarytop">
-      <div><h2>Library</h2><p id="resultCount"></p></div>
-      <div class="toolbar"><button id="deleteSelected" class="danger" disabled>Delete selected</button><button id="addShow" class="primary">＋ Add show</button></div>
-    </div>
+    <div class="librarytop"><div><h2>Library</h2><p id="resultCount"></p></div><button id="addShow" class="primary">＋ Add show</button></div>
     <div class="filters">
       <div class="search"><span aria-hidden="true">⌕</span><input id="search" placeholder="Search title, service, status, notes or date"><button id="clearSearch" title="Clear search">×</button></div>
       <select id="service"><option value="">All services</option></select>
@@ -54,24 +49,14 @@
     </div>
     <div class="tablewrap">
       <table id="showTable">
-        <colgroup>
-          <col data-col="show"><col data-col="service"><col data-col="status"><col data-col="watched"><col data-col="next"><col data-col="rating"><col data-col="favorite"><col data-col="release"><col data-col="notes">
-        </colgroup>
+        <colgroup><col data-col="show"><col data-col="service"><col data-col="status"><col data-col="watched"><col data-col="next"><col data-col="rating"><col data-col="favorite"><col data-col="release"><col data-col="notes"><col data-col="delete"></colgroup>
         <thead><tr>
-          <th data-sort="title" data-col="show">Show</th>
-          <th data-sort="network" data-col="service">Service</th>
-          <th data-sort="status" data-col="status">Status</th>
-          <th data-col="watched">Watched</th>
-          <th data-col="next">Next</th>
-          <th data-col="rating">Rating</th>
-          <th data-col="favorite">Favorite</th>
-          <th data-sort="when" data-col="release">Release</th>
-          <th data-col="notes">Notes</th>
+          <th data-sort="title">Show</th><th data-sort="network">Service</th><th data-sort="status">Status</th><th>Watched</th><th>Next</th><th>Rating</th><th>Fav</th><th data-sort="when">Release</th><th>Notes</th><th>Delete</th>
         </tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
-    <p class="tablehint">Edit directly in the cells. Press Enter to save and move down. Click Next to advance an episode. Select a row to delete it.</p>
+    <p class="tablehint">Click directly in a cell to edit. Press Enter to save. Click Next to advance one episode.</p>
   </section>
 
   <section id="timeline" class="page"><div class="librarytop"><div><h2>Watch Timeline</h2><p>Episode and status changes for the selected profile.</p></div><button id="clearTimeline">Clear timeline</button></div><div id="timelineList" class="timeline"></div></section>
@@ -81,19 +66,10 @@
     <article><h3>Backup & Transfer</h3><p>Use a backup to move the catalog and every profile between your PC and tablet.</p><div class="stack"><button id="backup">Download backup</button><button id="restore">Restore backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div></article>
     <article><h3>Import / Export</h3><p>Export the shared catalog as CSV for Excel, or import a CSV containing Title, Network, Release and Status.</p><div class="stack"><button id="exportCsv">Export catalog CSV</button><button id="importCsv">Import catalog CSV</button><input id="csvFile" type="file" accept=".csv,text/csv" hidden></div></article>
     <article><h3>Feedback Log</h3><textarea id="feedbackText" rows="4" placeholder="Write an improvement idea or problem..."></textarea><button id="saveFeedback">Save feedback</button><div id="feedbackList"></div></article>
-    <article><h3>Release Notes</h3><p><b>WolfTV 2.0</b></p><p>One consolidated app: direct cell editing, no Edit button, no poster view, no Cost column, combined Watched format, clickable Next, compact table, profiles, search, timeline and backup tools.</p></article>
+    <article><h3>Release Notes</h3><p><b>WolfTV 2.1</b></p><p>Removed Cost, combined Season and Episode into Watched, removed the Edit workflow, added direct cell editing, clickable Next, and improved automatic updates at the normal web address.</p></article>
   </div></section>
 </main>
 <div id="toast" role="status"></div>
-<dialog id="addDialog"><form id="addForm">
-  <h2>Add show</h2>
-  <div class="formgrid">
-    <label class="wide">Show title<input id="addTitle" required></label>
-    <label>Service<input id="addNetwork"></label>
-    <label>Release / NOW<input id="addWhen"></label>
-    <label>Status<select id="addStatus"><option>Watch</option><option>Watching</option><option>Watched</option><option>Very Good</option><option>Okay</option><option>No Good</option></select></label>
-  </div>
-  <div class="actions"><button type="button" id="cancelAdd">Cancel</button><button class="primary">Add show</button></div>
-</form></dialog>
-<script src="data.js?v=200"></script><script src="app.js?v=200"></script>
+<dialog id="addDialog"><form id="addForm"><h2>Add show</h2><div class="formgrid"><label class="wide">Show title<input id="addTitle" required></label><label>Service<input id="addNetwork"></label><label>Release / NOW<input id="addWhen"></label><label>Status<select id="addStatus"><option>Watch</option><option>Watching</option><option>Watched</option><option>Very Good</option><option>Okay</option><option>No Good</option></select></label><label class="wide">Notes<textarea id="addNotes" rows="3"></textarea></label></div><div class="actions"><button type="button" id="cancelAdd">Cancel</button><button class="primary">Add show</button></div></form></dialog>
+<script src="data.js"></script><script src="app.js"></script>
 </body></html>
