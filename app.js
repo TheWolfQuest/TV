@@ -5,7 +5,39 @@ const AUTO_BACKUP_KEY='wolftv-auto-backups-v1';
 const MAX_AUTO_BACKUPS=10;
 const $=id=>document.getElementById(id);
 let state=loadState(),currentPage='library',sort={key:'title',dir:1};
-function loadState(){try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(s&&Array.isArray(s.catalog)){s.profiles=s.profiles||DEFAULT_PROFILES;s.active=s.active||'Keith';s.personal=s.personal||{};s.timeline=s.timeline||{};s.feedback=s.feedback||[];return s}}catch{}return{catalog:(window.WOLFTV_SEED||[]).map(x=>({...x})),profiles:[...DEFAULT_PROFILES],active:'Keith',personal:{},timeline:{},feedback:[],theme:'dark'}}
+function loadState(){
+  const seed=(window.WOLFTV_SEED||[]).map(x=>({...x}));
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if(s&&Array.isArray(s.catalog)){
+      s.profiles=s.profiles||DEFAULT_PROFILES;
+      s.active=s.active||'Keith';
+      s.personal=s.personal||{};
+      s.timeline=s.timeline||{};
+      s.feedback=s.feedback||[];
+      s.deletedIds=Array.isArray(s.deletedIds)?s.deletedIds:[];
+      const catalogIds=new Set(s.catalog.map(x=>x.id));
+      const seedIds=seed.map(x=>x.id);
+      if(!Array.isArray(s.knownSeedIds)){
+        // First migration: seed rows missing from the saved catalog were deleted by the user.
+        s.deletedIds=[...new Set([...s.deletedIds,...seedIds.filter(id=>!catalogIds.has(id))])];
+        s.knownSeedIds=[...seedIds];
+      }else{
+        const known=new Set(s.knownSeedIds);
+        const deleted=new Set(s.deletedIds);
+        // Only genuinely new seed rows are merged into an existing library.
+        seed.forEach(show=>{if(!known.has(show.id)&&!deleted.has(show.id)&&!catalogIds.has(show.id)){s.catalog.push({...show});catalogIds.add(show.id)}});
+        s.knownSeedIds=[...new Set([...s.knownSeedIds,...seedIds])];
+      }
+      const deleted=new Set(s.deletedIds);
+      s.catalog=s.catalog.filter(x=>x&&x.id&&!deleted.has(x.id));
+      s.schemaVersion=2;
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(s));
+      return s;
+    }
+  }catch{}
+  return{schemaVersion:2,catalog:seed,knownSeedIds:seed.map(x=>x.id),deletedIds:[],profiles:[...DEFAULT_PROFILES],active:'Keith',personal:{},timeline:{},feedback:[],theme:'dark'}
+}
 function getAutoBackups(){try{return JSON.parse(localStorage.getItem(AUTO_BACKUP_KEY))||[]}catch{return []}}
 function saveAutoBackups(items){localStorage.setItem(AUTO_BACKUP_KEY,JSON.stringify(items.slice(0,MAX_AUTO_BACKUPS)))}
 function createAutoBackup(){try{const current=localStorage.getItem(STORAGE_KEY);if(!current)return;const backups=getAutoBackups();if(backups[0]?.data===current)return;backups.unshift({at:new Date().toISOString(),data:current});saveAutoBackups(backups)}catch{}}
@@ -46,7 +78,7 @@ function renderTable(){const items=filteredShows();$('resultCount').textContent=
 function commitInline(el){const id=el.dataset.id,field=el.dataset.field,base=state.catalog.find(x=>x.id===id),r=record(id);if(!base)return;if(field==='title'||field==='network'||field==='when')base[field]=el.value.trim();else if(field==='notes')r.notes=el.value.trim();else if(field==='watched'){const p=parseProgress(el.value);if(!el.value.trim()){r.season=0;r.episode=0}else if(p){r.season=p.season;r.episode=p.episode;r.status='Watching';addTimeline(id,`Set watched to ${progress(r.season,r.episode)}`)}else{toast('Use S2 E4 format');el.value=progress(r.season,r.episode);return}}save();if(field==='network')populateServices();toast('Saved')}
 function bindInline(){document.querySelectorAll('.cell-edit').forEach(el=>{el.addEventListener('change',()=>commitInline(el));el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();commitInline(el);el.blur()}if(e.key==='Escape'){renderTable()}})});document.querySelectorAll('.cell-select').forEach(el=>el.onchange=()=>{record(el.dataset.id).status=el.value;addTimeline(el.dataset.id,`Status changed to ${el.value}`);save();toast('Saved')});document.querySelectorAll('[data-fav]').forEach(el=>el.onclick=()=>{const r=record(el.dataset.fav);r.favorite=!r.favorite;save();renderTable()});document.querySelectorAll('[data-rating]').forEach(el=>el.onclick=()=>{const r=record(el.dataset.rating);r.rating=String(((+r.rating||0)+1)%6||'');save();renderTable()});document.querySelectorAll('[data-delete]').forEach(el=>el.onclick=()=>deleteShow(el.dataset.delete))}
 function bindNextButtons(){document.querySelectorAll('[data-next]').forEach(el=>el.onclick=()=>{const r=record(el.dataset.next);if(!r.season)r.season=1;r.episode=(+r.episode||0)+1;r.status='Watching';const show=state.catalog.find(x=>x.id===el.dataset.next);addTimeline(el.dataset.next,`Watched ${progress(r.season,r.episode)}`);save();toast(`${show?.title||'Show'}: ${progress(r.season,r.episode)}`);currentPage==='dashboard'?renderDashboard():renderTable()})}
-function deleteShow(id){const s=state.catalog.find(x=>x.id===id);if(!s||!confirm(`Delete "${s.title}" from the shared catalog?`))return;state.catalog=state.catalog.filter(x=>x.id!==id);Object.values(state.personal).forEach(p=>delete p[id]);save();populateServices();renderTable();toast('Show deleted')}
+function deleteShow(id){const s=state.catalog.find(x=>x.id===id);if(!s||!confirm(`Delete "${s.title}" from the shared catalog?`))return;state.deletedIds=Array.isArray(state.deletedIds)?state.deletedIds:[];if(!state.deletedIds.includes(id))state.deletedIds.push(id);state.catalog=state.catalog.filter(x=>x.id!==id);Object.values(state.personal).forEach(p=>delete p[id]);save();populateServices();renderTable();toast('Show deleted permanently for future updates')}
 function renderTimeline(){const items=state.timeline[state.active]||[];$('timelineList').innerHTML=items.map(t=>{const s=state.catalog.find(x=>x.id===t.id);return `<div class="timeitem"><time>${new Date(t.at).toLocaleString()}</time><div><b>${esc(s?.title||'Deleted show')}</b><br>${esc(t.action)}</div></div>`}).join('')||'<p>No timeline entries yet.</p>'}
 function renderSettings(){updateBackupStatus();$('profiles').innerHTML=state.profiles.map(n=>`<div class="profileline"><span>${esc(n)}${n===state.active?' (active)':''}</span>${n==='Keith'?'':`<button class="mini" data-remove-profile="${esc(n)}">Remove</button>`}</div>`).join('');$('feedbackList').innerHTML=state.feedback.slice().reverse().map(f=>`<div class="feedbackitem"><span>${esc(f.text)}<br><small>${new Date(f.at).toLocaleString()}</small></span></div>`).join('');document.querySelectorAll('[data-remove-profile]').forEach(el=>el.onclick=()=>{state.profiles=state.profiles.filter(x=>x!==el.dataset.removeProfile);delete state.personal[el.dataset.removeProfile];delete state.timeline[el.dataset.removeProfile];save();renderProfiles();renderSettings()})}
 function populateServices(){const selected=$('service').value;$('service').innerHTML='<option value="">All services</option>'+[...new Set(state.catalog.map(x=>x.network).filter(Boolean))].sort().map(x=>`<option>${esc(x)}</option>`).join('');$('service').value=selected}

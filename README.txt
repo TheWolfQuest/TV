@@ -1,5 +1,3 @@
-WolfTV 2.2
+WolfTV 2.3
 
-Upload all files to the root of your GitHub TV repository, replacing the existing files. Use the normal site address: https://thewolfquest.github.io/TV
-
-Automatic backups are stored separately on each device and browser.
+Deleted shows are recorded by permanent ID and remain deleted after future program or catalog updates. New seed shows can be merged without restoring removed rows. Automatic backups remain enabled.
