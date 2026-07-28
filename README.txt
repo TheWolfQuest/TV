@@ -1,2 +1,1 @@
-WolfTV 2.4 - Series/Movie Type
-Upload all files to the root of TheWolfQuest/TV and replace existing files. Use https://thewolfquest.github.io/TV
+WolfTV 2.5: Service dropdown with Unknown default. Upload all files to the root of the GitHub TV repository.
