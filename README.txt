@@ -1,11 +1,17 @@
-WolfTV 4 GitHub Pages Update
+WolfTV 2.0 — Complete GitHub Pages Update
 
 Upload every file in this folder to the ROOT of the GitHub repository named TV.
 Replace the existing files and commit the changes.
 
 Then open:
-https://thewolfquest.github.io/TV/?v=40
+https://thewolfquest.github.io/TV/?v=200
 
-Profiles included: Keith, Debby, Sara, Kevin, John, Glenn.
-The show catalog is shared. Each profile's progress is stored separately on each browser/device.
-Use Backup on one device and Restore on another to transfer all profiles and progress.
+This release includes all agreed changes in one app:
+- direct editing in table cells; no Edit button
+- no posters and no Cost column
+- combined Watched format such as S2 E4
+- clickable Next episode
+- compact table, search, profiles, timeline, backup/restore and CSV tools
+
+Profiles: Keith, Debby, Sara, Kevin, John and Glenn.
+The catalog is shared. Personal progress is separate by profile and browser/device.
