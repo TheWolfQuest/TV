@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1324">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>WolfTV 2.3.1 Test</title>
+  <title>WolfTV 2.4</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.3.1 TEST · TheWolfQuest</small></div></div>
+  <div class="brand"><span aria-hidden="true">🐺</span><div><h1>WolfTV</h1><small>Version 2.4 · TheWolfQuest</small></div></div>
   <div class="profile"><label for="profile">Watching as</label><select id="profile"></select></div>
   <button id="theme" title="Switch light/dark mode" aria-label="Switch light/dark mode">🌙</button>
 </header>
@@ -28,8 +28,8 @@
       <button data-filter="Watching"><b id="statWatching">0</b><span>Continue Watching</span></button>
       <button data-filter="soon"><b id="statSoon">0</b><span>Coming Soon</span></button>
       <button data-filter="favorite"><b id="statFavorites">0</b><span>Favorites</span></button>
-      <button data-filter="Watched"><b id="statWatched">0</b><span>Watched</span></button>
-      <button data-filter="available"><b id="statAvailable">0</b><span>Available Now</span></button>
+      <button data-type-card="Series"><b id="statSeries">0</b><span>Series</span></button>
+      <button data-type-card="Movie"><b id="statMovies">0</b><span>Movies</span></button>
       <button data-filter="all"><b id="statTotal">0</b><span>Total Shows</span></button>
     </div>
     <div class="dashgrid">
@@ -42,16 +42,17 @@
   <section id="library" class="page active">
     <div class="librarytop"><div><h2>Library</h2><p id="resultCount"></p></div><button id="addShow" class="primary">＋ Add show</button></div>
     <div class="filters">
-      <div class="search"><span aria-hidden="true">⌕</span><input id="search" placeholder="Search title, service, status, notes or date"><button id="clearSearch" title="Clear search">×</button></div>
+      <div class="search"><span aria-hidden="true">⌕</span><input id="search" placeholder="Search title, service, type, status, notes or date"><button id="clearSearch" title="Clear search">×</button></div>
       <select id="service"><option value="">All services</option></select>
+      <select id="type"><option value="">All types</option><option>Series</option><option>Movie</option></select>
       <select id="status"><option value="">All statuses</option><option>Watch</option><option>Watching</option><option>Watched</option><option>Very Good</option><option>Okay</option><option>No Good</option></select>
       <select id="quick"><option value="all">All shows</option><option value="soon">Coming soon</option><option value="available">Available now</option><option value="favorite">Favorites</option></select>
     </div>
     <div class="tablewrap">
       <table id="showTable">
-        <colgroup><col data-col="show"><col data-col="service"><col data-col="status"><col data-col="watched"><col data-col="next"><col data-col="rating"><col data-col="favorite"><col data-col="release"><col data-col="notes"><col data-col="delete"></colgroup>
+        <colgroup><col data-col="show"><col data-col="service"><col data-col="type"><col data-col="status"><col data-col="watched"><col data-col="next"><col data-col="rating"><col data-col="favorite"><col data-col="release"><col data-col="notes"><col data-col="delete"></colgroup>
         <thead><tr>
-          <th data-sort="title">Show</th><th data-sort="network">Service</th><th data-sort="status">Status</th><th>Watched</th><th>Next</th><th>Rating</th><th>Fav</th><th data-sort="when">Release</th><th>Notes</th><th>Delete</th>
+          <th data-sort="title">Show</th><th data-sort="network">Service</th><th data-sort="type">Type</th><th data-sort="status">Status</th><th>Watched</th><th>Next</th><th>Rating</th><th>Fav</th><th data-sort="when">Release</th><th>Notes</th><th>Delete</th>
         </tr></thead>
         <tbody id="rows"></tbody>
       </table>
@@ -66,10 +67,10 @@
     <article><h3>Backup & Transfer</h3><p>WolfTV now keeps up to 10 automatic backups on this device whenever you make a change. Downloaded backups are still best for moving data between devices.</p><p id="autoBackupStatus" class="muted"></p><div class="stack"><button id="restoreLatestAuto">Restore latest automatic backup</button><button id="clearAutoBackups">Clear automatic backups</button><button id="backup">Download backup</button><button id="restore">Restore downloaded backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div></article>
     <article><h3>Import / Export</h3><p>Export the shared catalog as CSV for Excel, or import a CSV containing Title, Network, Release and Status.</p><div class="stack"><button id="exportCsv">Export catalog CSV</button><button id="importCsv">Import catalog CSV</button><input id="csvFile" type="file" accept=".csv,text/csv" hidden></div></article>
     <article><h3>Feedback Log</h3><textarea id="feedbackText" rows="4" placeholder="Write an improvement idea or problem..."></textarea><button id="saveFeedback">Save feedback</button><div id="feedbackList"></div></article>
-    <article><h3>Release Notes</h3><p><b>WolfTV 2.3.1 — Deletion Persistence Test</b></p><p>This test release makes only a visible version-label change. It does not replace or reset your saved catalog. Agency, American Monster, and American Primeval should remain deleted after this update.</p><p class="test-note">TEST BUILD: verify your three deleted titles are still absent.</p></article>
+    <article><h3>Release Notes</h3><p><b>WolfTV 2.4 — Series / Movie Type</b></p><p>Adds a directly editable Type column, a Series/Movie filter, separate dashboard counts, and Type support in CSV import/export. Existing shows are initially classified automatically and can be corrected in the table.</p></article>
   </div></section>
 </main>
 <div id="toast" role="status"></div>
-<dialog id="addDialog"><form id="addForm"><h2>Add show</h2><div class="formgrid"><label class="wide">Show title<input id="addTitle" required></label><label>Service<input id="addNetwork"></label><label>Release / NOW<input id="addWhen"></label><label>Status<select id="addStatus"><option>Watch</option><option>Watching</option><option>Watched</option><option>Very Good</option><option>Okay</option><option>No Good</option></select></label><label class="wide">Notes<textarea id="addNotes" rows="3"></textarea></label></div><div class="actions"><button type="button" id="cancelAdd">Cancel</button><button class="primary">Add show</button></div></form></dialog>
+<dialog id="addDialog"><form id="addForm"><h2>Add show</h2><div class="formgrid"><label class="wide">Show title<input id="addTitle" required></label><label>Service<input id="addNetwork"></label><label>Type<select id="addType"><option>Series</option><option>Movie</option></select></label><label>Release / NOW<input id="addWhen"></label><label>Status<select id="addStatus"><option>Watch</option><option>Watching</option><option>Watched</option><option>Very Good</option><option>Okay</option><option>No Good</option></select></label><label class="wide">Notes<textarea id="addNotes" rows="3"></textarea></label></div><div class="actions"><button type="button" id="cancelAdd">Cancel</button><button class="primary">Add show</button></div></form></dialog>
 <script src="data.js"></script><script src="app.js"></script>
 </body></html>
